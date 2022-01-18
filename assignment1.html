@@ -17,19 +17,43 @@
             <img src="ezgif.com-gif-maker.gif" width=400></a>
             </p>
             <p>
-            Here is all the documentation for assignment 1! For this assignment I have three blinking LED's, all blinking at different time lengths. 
+            Here is all the documentation for assignment 1. For this assignment I have three blinking LED's, all blinking for different lengths. 
             </p>
             <h2>Schematic</h2>
             <p>
-                <img src="schematic.png" width=400></a>
+                These are the schematics for my three LEDs, which were plugged into pins 2, 3, and 4. The LED's 
             </p>
-            <h2>Circuit</h2>
             <p>
                 <img src="schematic.png" width=400></a>
+            </p>`
+            <h2>Circuit</h2>
+            <p>
+                <img src="circuit_overview.jpg" width=400></a>
             </p>
             <h2>Firmware</h2>
             <p>
-                <img src="schematic.png" width=400></a>
+                <code>
+                    void setup() { //initializes LED variables
+                        pinMode(4, OUTPUT); //Red in pin 4
+                        pinMode(3, OUTPUT); //Green in pin 3
+                        pinMode(2, OUTPUT); //Blue in pin 2
+                      }
+                      //
+                      void loop() { //loops through LED patterns
+                        digitalWrite(4, HIGH); //red on
+                        digitalWrite(3, LOW); //green off
+                        digitalWrite(2, LOW); //blue off
+                        delay(1000); //one second delay
+                        digitalWrite(4, LOW); //red off
+                        digitalWrite(3, HIGH); //green on
+                        digitalWrite(2, LOW); //blue off
+                        delay(500); //half second delay
+                        digitalWrite(4, HIGH); //red on
+                        digitalWrite(3, LOW); //green off
+                        digitalWrite(2, HIGH); // blue on
+                        delay(250); // quarter second delay
+                      }
+                </code>
             </p>
         </div>
         
