@@ -22,6 +22,7 @@
             <h2>Schematic</h2>
             <p>
                 These are the schematics for my three LEDs, which were plugged into pins 2, 3, and 4. The red and green LED's have 2200 ohm resistors, while the blue LED has a 100 ohm resistor. Here is the math that went into choosing the resistors:
+                <pre>
                 <code>
                     5V - 1.8V drop for red and green
                     3.2V
@@ -30,6 +31,7 @@
                     1.8V
                     1.8/.02 = 90 ohms -> 100 ohm resistor   
                 </code>
+            </pre>
             </p>
             <p>
                 <img src="schematic.png" width=400></a>
@@ -46,6 +48,7 @@
                 <p>
                     This is my code that creates the pattern the LED's are making.
                 </p>
+                <pre>
                 <code>
                     void setup() { //initializes LED variables
                         pinMode(4, OUTPUT); //Red in pin 4
@@ -68,6 +71,7 @@
                         delay(250); // quarter second delay
                       }
                 </code>
+            </pre>
             </p>
         </div>
         

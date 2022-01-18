@@ -36,6 +36,14 @@ a {
   float: left;
 }
 
+/* code from http://web.simmons.edu/~grabiner/comm244/weekfour/code-test.html
+formats how code is displayed*/
+pre code {
+  background-color: #eee;
+  border: 1px solid #999;
+  display: block;
+  padding: 20px;
+}
 .assignment:hover { overflow:auto }
 
 .assignment a {
