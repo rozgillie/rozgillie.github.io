@@ -1,0 +1,77 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Roz Gillie's HCDE 439 Physical Computing Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>My Assignment 3!</h1>
+            <p>
+            <img src="a3_1.gif" width=400></a>
+            <img src="a3_2.gif" width=400></a>
+            </p>
+            <p>
+            Here is all the documentation for assignment 3. For this assignment I had one green LED and a photoresistor!
+            </p>
+            <h2>Schematic</h2>
+            <p>
+                These are the schematics for my photoresistor and my green LED. For my photoresistor button switch I used a 10k ohms resistor to reduce the amount of power it uses as much as I can while still providing enough power for it to work. For my green LED I used a 220 ohm resistor. You can see my math below using Ohms law to determine the resistor amount. 
+                <pre>
+                <code>
+                    5V - 1.8V drop for green
+                    3.2V
+                    3.2/.02 = 160 -> 220 ohm resistor   
+                </code>
+            </pre>
+            </p>
+            <p>
+                <img src="a2_schematic.png" width=400></a>
+            </p>`
+            <h2>Circuit</h2>
+            <p>
+                Here is my breadboard and arduino. 
+            </p>
+            <p>
+                <img src="a3_overview.png" width=400></a>
+            </p>
+            <h2>Firmware</h2>
+            <p>
+                <p>
+                    This is my code that tracks the input of the photoresisotr and controls the LED.
+                </p>
+                <pre>
+                <code>
+                    void setup() {
+                        Serial.begin(9600); // configure serial
+                        pinMode(9, OUTPUT); //initialize LED
+                      }
+                      
+                      void loop() {
+                        int sensorVal = analogRead(A0); //assign variable to input on analog pin 0
+                        int outputVal = map(sensorVal, 0, 1023, 0, 255);// map sensorVal to numbers between 0 and 1023- these numbers by default worked so I didn't end up changing them
+                        if(sensorVal < 700){ // if photoresistor is covered, LED turns on
+                          analogWrite(9, outputVal);// pin 9 turns to level of outputVal
+                        }
+                        else if(sensorVal > 600){// if photoresistor is not covered, LEF turns off
+                          digitalWrite(9, LOW);
+                        }
+                        Serial.print("Sensor Value:"); //formatting to serial print
+                        Serial.println(sensorVal); //prints out sensor value
+                        delay(1000); //taken from in-class exercise, delay for stability
+                      }
+                </code>
+            </pre>
+            </p>
+        </div>
+
+        </div>
+        
+    </body>
+</html>
