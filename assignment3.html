@@ -44,7 +44,7 @@
             <h2>Firmware</h2>
             <p>
                 <p>
-                    This is my code that tracks the input of the photoresistor and controls the LED.
+                    This is my code that tracks the output of the photoresistor and controls the LED.
                 </p>
                 <pre>
                 <code>
@@ -56,10 +56,10 @@
                       void loop() {
                         int sensorVal = analogRead(A0); //assign variable to input on analog pin 0
                         int outputVal = map(sensorVal, 0, 1023, 0, 255);// map sensorVal to numbers between 0 and 1023- these numbers by default worked so I didn't end up changing them
-                        if(sensorVal < 700){ // if photoresistor is covered, LED turns on
+                        if(sensorVal < 600){ // if photoresistor is covered, LED turns on
                           analogWrite(9, outputVal);// pin 9 turns to level of outputVal
                         }
-                        else if(sensorVal > 600){// if photoresistor is not covered, LEF turns off
+                        else{ // if photoresistor is not covered, LED turns off
                           digitalWrite(9, LOW);
                         }
                         Serial.print("Sensor Value:"); //formatting to serial print
