@@ -17,11 +17,22 @@
             <img src="a5.gif" width=400></a>
             </p>
             <p>
-            Here is all the documentation for assignment 5. For this assignment I used an IR receiver, remote, and LED strips to control the LED strip via the remote. I took the remote input, checked if the IR code was for the up/ down buttons, then adjusted the LED strip brighntess accordingly. 
+            Here is all the documentation for assignment 5. For this assignment I used an IR receiver, remote, and LED strips to control the LED strip via the remote. I took the remote input, checked if the IR code was for the up/ down buttons, then adjusted the LED strip brightness accordingly. 
             </p>
             <h2>Schematic</h2>
             <p>
-                These are the schematics for my IR receiver and the N-MOSFET transistor with my LED strip. 
+                These are the schematics for my IR receiver and the N-MOSFET transistor with my LED strip. The transistor has a max current of 32A, and below I calculate how much current is drawn by the LED strip.  
+                <pre>
+                    <code>
+                        White LEDs voltage drop: 3.3 V
+                        LED resistor: 181 ohms
+                        3 * 3.3 = 9.9 V
+                        12 - 9.9 = 2.1 V drop across resistor
+                        18 * 10 = 180 ohms
+                        2.1/ 180 = .011666 A = 11.7 mA
+                        The current drawn by the LEDs is less than the max current of the transistor.
+                    </code>
+                </pre> 
             </p>
             <p>
                 <img src="a5_schematic.png" width=400></a>
@@ -56,7 +67,7 @@
                         
                         void loop() {
                           if (irrecv.decode(&results)){ //if IR code is received
-                            Serial.println(results.value);
+                            Serial.println(results.value); //prints to Serial console
                             if(results.value == 16748655 && brightness < 255){ //if up button is pressed
                               brightness = brightness + 30; //brightness is increased
                             }
