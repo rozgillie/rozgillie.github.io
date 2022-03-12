@@ -1,0 +1,127 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Roz Gillie's HCDE 439 Physical Computing Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>My Final Project!</h1>
+
+            <p>
+            Here is all the documentation for my final project. For this assignment I wanted to expand on my HCDE 451 project where I created a knee wearable prototype of an app interface and a wearable with a dc motor to user test vibration haptics. For this project, I wanted to take this a step further by creating a wearable that would track your knee angle and then notify the user via vibration when they hyperextend their knee. This stems from my own history of hyperextending my knee mid game and not realizing until after, and so it's to help athletes be more informed of their knee health.
+
+            For my project I used a rotary encoder to measure the angle and a dc motor to provide the vibration feedback.
+            
+            </p>
+
+            <h2>Schematic</h2>
+            <p>
+                These are the schematics for my rotary encoder and my dc motor. For my dc motor I used a ___ resistor. 
+                <pre>
+                    <code>
+                        Green LEDs voltage drop: 1.8 V
+                        5 - 1.8 = 3.2V
+                        3.2/.02 = 160 -> 220 ohm resistor
+                    </code>
+                </pre> 
+            </p>
+            <p>
+                <img src="a6_schematic.png" width=400></a>
+            </p>`
+            <h2>Circuit</h2>
+            <p>
+                Here is my breadboard and arduino connected to my rotary encoder and dc motor.
+            </p>
+            <p>
+                <img src="a6_overview.png" width=400></a>
+            </p>
+            <h2>Video Demo</h2>
+            <p>
+            <iframe width="420" height="315"
+src="https://www.youtube.com/watch?v=9cuLn1VtA0I">
+</iframe>
+</p>
+            <h2>Firmware</h2>
+            <p>
+                <p>
+                    This is my arduino code that keeps track of the rotary encoder input and turns on the DC motor when the rotary encoder is twisted too much.
+                </p>
+                <h3>Arduino Code</h3>
+                <pre>
+                <code>
+                    // tutorial for rotary encoder code
+                    // https://lastminuteengineers.com/rotary-encoder-arduino-tutorial/
+                    
+                    // Rotary Encoder Inputs
+                    int clk = 2; // rotary click on pin 2
+                    int dt = 3; // dt on pin 3
+                    int motor = 9; //motor on pin 9
+                    int counter = 0; // counter set to 0
+                    int currentStateCLK; // initialize current clk state
+                    int lastStateCLK; // initialize last clk state
+                    String currentDir =""; //tracks direction of turn
+                    
+                    void setup() {
+                      // encoder pin inputs
+                      pinMode(clk,INPUT);
+                      pinMode(dt,INPUT);
+                      
+                      pinMode(motor, OUTPUT); //initialize motor output
+                      Serial.begin(9600); // begin serial monitor
+                    
+                      // Read the initial state of CLK
+                      lastStateCLK = digitalRead(clk);
+                    }
+                    
+                    void loop() {
+                      // Read the current state of CLK
+                      currentStateCLK = digitalRead(clk);
+                    
+                      // change in CLK means knob has moved
+                      if (currentStateCLK != lastStateCLK  && currentStateCLK == 1){
+                    
+                        // if DT is different, the direction is different
+                        if (digitalRead(dt) != currentStateCLK) {
+                          counter --;
+                          currentDir ="CCW";
+                        } else {
+                          counter ++;
+                          currentDir ="CW";
+                        }
+                      // serial print direction and count
+                        Serial.print("Direction: ");
+                        Serial.print(currentDir);
+                        Serial.print(" | Counter: ");
+                        Serial.println(counter);
+                      }
+                      
+                      // if hyperextended, then turn on motor
+                      if(counter < 0){
+                        digitalWrite(motor, HIGH);
+                      }else{
+                        digitalWrite(motor, LOW);
+                      }
+                      
+                      // Remember last CLK state
+                      lastStateCLK = currentStateCLK;
+                    
+                      // Put in a slight delay to help debounce the reading
+                      delay(1);
+                    }
+                        }
+                </code>
+            
+            </p>
+        </div>
+
+        </div>
+        
+    </body>
+</html>
