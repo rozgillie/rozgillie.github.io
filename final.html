@@ -33,89 +33,91 @@
                 </pre> 
             </p>
             <p>
-                <img src="a6_schematic.png" width=400></a>
+                <img src="final_schematic.png" width=400></a>
             </p>`
             <h2>Circuit</h2>
             <p>
                 Here is my breadboard and arduino connected to my rotary encoder and dc motor.
             </p>
             <p>
-                <img src="a6_overview.png" width=400></a>
+                <img src="final_overview.png" width=400></a>
+                <img src="final_overview_closeup.png" width=400></a>
             </p>
             <h2>Video Demo</h2>
             <p>
-            <iframe width="420" height="315"
-src="https://www.youtube.com/watch?v=9cuLn1VtA0I">
-</iframe>
-</p>
+              <iframe width="420" height="315"
+              src="https://www.youtube.com/watch?v=9cuLn1VtA0I">
+              </iframe>
+            </p>
             <h2>Firmware</h2>
             <p>
                 <p>
-                    This is my arduino code that keeps track of the rotary encoder input and turns on the DC motor when the rotary encoder is twisted too much.
+                    This is my arduino code that keeps track of the rotary encoder input and turns on the DC motor when the rotary encoder is twisted too much. The clk pin tracks if the rotary encoder has been twisted, while the dt pin tracks what direction it's moved in. For every twist clockwise, the counter goes up, while it goes down if it's twisted counter clockwise. 
+                    
+                    To calibrate the wearable, the user would first put it on and straighten their leg as much as they can. The code is then uploaded and so this normal extension of their leg is set to 0. As they bend their leg, the counter goes up, and as they extend their leg it goes to back to 0. In the case where their leg is hyperextended, the counter would become negative. In this case, the DC motor is turned on to notify the user. 
                 </p>
                 <h3>Arduino Code</h3>
                 <pre>
                 <code>
-                    // tutorial for rotary encoder code
-                    // https://lastminuteengineers.com/rotary-encoder-arduino-tutorial/
-                    
-                    // Rotary Encoder Inputs
-                    int clk = 2; // rotary click on pin 2
-                    int dt = 3; // dt on pin 3
-                    int motor = 9; //motor on pin 9
-                    int counter = 0; // counter set to 0
-                    int currentStateCLK; // initialize current clk state
-                    int lastStateCLK; // initialize last clk state
-                    String currentDir =""; //tracks direction of turn
-                    
-                    void setup() {
-                      // encoder pin inputs
-                      pinMode(clk,INPUT);
-                      pinMode(dt,INPUT);
-                      
-                      pinMode(motor, OUTPUT); //initialize motor output
-                      Serial.begin(9600); // begin serial monitor
-                    
-                      // Read the initial state of CLK
-                      lastStateCLK = digitalRead(clk);
-                    }
-                    
-                    void loop() {
-                      // Read the current state of CLK
-                      currentStateCLK = digitalRead(clk);
-                    
-                      // change in CLK means knob has moved
-                      if (currentStateCLK != lastStateCLK  && currentStateCLK == 1){
-                    
-                        // if DT is different, the direction is different
-                        if (digitalRead(dt) != currentStateCLK) {
-                          counter --;
-                          currentDir ="CCW";
-                        } else {
-                          counter ++;
-                          currentDir ="CW";
-                        }
-                      // serial print direction and count
-                        Serial.print("Direction: ");
-                        Serial.print(currentDir);
-                        Serial.print(" | Counter: ");
-                        Serial.println(counter);
-                      }
-                      
-                      // if hyperextended, then turn on motor
-                      if(counter < 0){
-                        digitalWrite(motor, HIGH);
-                      }else{
-                        digitalWrite(motor, LOW);
-                      }
-                      
-                      // Remember last CLK state
-                      lastStateCLK = currentStateCLK;
-                    
-                      // Put in a slight delay to help debounce the reading
-                      delay(1);
-                    }
-                        }
+              // tutorial for rotary encoder code
+              // https://lastminuteengineers.com/rotary-encoder-arduino-tutorial/
+              
+              // Rotary Encoder Inputs
+              int clk = 2; // rotary click on pin 2
+              int dt = 3; // dt on pin 3
+              int motor = 9; //motor on pin 9
+              int counter = 0; // counter set to 0
+              int currentStateCLK; // initialize current clk state
+              int lastStateCLK; // initialize last clk state
+              String currentDir =""; //tracks direction of turn
+              
+              void setup() {
+                // encoder pin inputs
+                pinMode(clk,INPUT);
+                pinMode(dt,INPUT);
+                
+                pinMode(motor, OUTPUT); //initialize motor output
+                Serial.begin(9600); // begin serial monitor
+              
+                // Read the initial state of CLK
+                lastStateCLK = digitalRead(clk);
+              }
+              
+              void loop() {
+                // Read the current state of CLK
+                currentStateCLK = digitalRead(clk);
+              
+                // change in CLK means knob has moved
+                if (currentStateCLK != lastStateCLK  && currentStateCLK == 1){
+              
+                  // if DT is different, the direction is different
+                  if (digitalRead(dt) != currentStateCLK) {
+                    counter --;
+                    currentDir ="CCW";
+                  } else {
+                    counter ++;
+                    currentDir ="CW";
+                  }
+                // serial print direction and count
+                  Serial.print("Direction: ");
+                  Serial.print(currentDir);
+                  Serial.print(" | Counter: ");
+                  Serial.println(counter);
+                }
+                
+                // if hyperextended, then turn on motor
+                if(counter < 0){
+                  digitalWrite(motor, HIGH);
+                }else{
+                  digitalWrite(motor, LOW);
+                }
+                
+                // Remember last CLK state
+                lastStateCLK = currentStateCLK;
+              
+                // Put in a slight delay to help debounce the reading
+                delay(1);
+              }
                 </code>
             
             </p>
