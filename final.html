@@ -15,29 +15,22 @@
             <h1>My Final Project!</h1>
 
             <p>
-            Here is all the documentation for my final project. For this assignment I wanted to expand on my HCDE 451 project where I created a knee wearable prototype of an app interface and a wearable with a dc motor to user test vibration haptics. For this project, I wanted to take this a step further by creating a wearable that would track your knee angle and then notify the user via vibration when they hyperextend their knee. This stems from my own history of hyperextending my knee mid game and not realizing until after, and so it's to help athletes be more informed of their knee health.
+            Here is all the documentation for my final project. For this assignment I wanted to expand on my HCDE 451 project where I created a knee wearable prototype including an app interface and a wearable with a dc motor to user test vibration haptics. For this project, I wanted to take this a step further by creating a wearable that would track a user's knee angle and then notify the user via vibration when they hyperextend their knee. This stems from my own history of hyperextending my knee in the middle of volleyball games and not realizing it until after the game is over. The primary goal behind the concept of this wearable is to help athletes be more informed of their knee health.
 
-            For my project I used a rotary encoder to measure the angle and a dc motor to provide the vibration feedback.
+            For my project I used a rotary encoder to measure the angle of the knee bend and a DC motor to provide the vibration feedback.
             
             </p>
 
             <h2>Schematic</h2>
             <p>
-                These are the schematics for my rotary encoder and my dc motor. For my dc motor I used a ___ resistor. 
-                <pre>
-                    <code>
-                        Green LEDs voltage drop: 1.8 V
-                        5 - 1.8 = 3.2V
-                        3.2/.02 = 160 -> 220 ohm resistor
-                    </code>
-                </pre> 
+                These are the schematics for my rotary encoder and my DC motor. For my DC motor I used a 330 ohm resistor to still provide a lot of power to the motor, but also to keep too much current from going through the transistor.  
             </p>
             <p>
                 <img src="final_schematic.png" width=400></a>
             </p>`
             <h2>Circuit</h2>
             <p>
-                Here is my breadboard and arduino connected to my rotary encoder and dc motor.
+                Here is my breadboard and arduino connected to my rotary encoder and DC motor. For my 3D casing I used simple boxes to house the rotary encoder and motor, and two long rectangular pieces attached to the rotary encoder via clothespins and hot glue. This is all attached to the knee compression sleeve using hot glue. Because I needed to keep the wearable attached to my computer in order to calibrate it to different users, I wasn't able to cover the wires and instead chose to extend them to give users more space when trying on the wearable. 
             </p>
             <p>
                 <img src="final_overview.png" width=400></a>
@@ -45,16 +38,18 @@
             </p>
             <h2>Video Demo</h2>
             <p>
+              <body>
               <iframe width="420" height="315"
-              src="https://www.youtube.com/watch?v=9cuLn1VtA0I">
+              src="https://www.youtube.com/embed/9cuLn1VtA0I">
               </iframe>
+            </body>
             </p>
             <h2>Firmware</h2>
             <p>
                 <p>
                     This is my arduino code that keeps track of the rotary encoder input and turns on the DC motor when the rotary encoder is twisted too much. The clk pin tracks if the rotary encoder has been twisted, while the dt pin tracks what direction it's moved in. For every twist clockwise, the counter goes up, while it goes down if it's twisted counter clockwise. 
                     
-                    To calibrate the wearable, the user would first put it on and straighten their leg as much as they can. The code is then uploaded and so this normal extension of their leg is set to 0. As they bend their leg, the counter goes up, and as they extend their leg it goes to back to 0. In the case where their leg is hyperextended, the counter would become negative. In this case, the DC motor is turned on to notify the user. 
+                    To calibrate the wearable, the user would first put it on and straighten their leg as much as they can. The code is then uploaded and this normal extension of their leg sets the counter to 0. As they bend their leg the counter goes up, and as they extend their leg it goes to back to 0. In the case where their leg is hyperextended, the counter would become negative and the DC motor is turned on to notify the user. 
                 </p>
                 <h3>Arduino Code</h3>
                 <pre>
